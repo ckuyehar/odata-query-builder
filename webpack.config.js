@@ -1,9 +1,13 @@
+const path = require('path');
 const DtsBundleWebpack = require('dts-bundle-webpack')
+
 module.exports = {
+  mode: 'development',
   entry: './src/queryBuilder.ts',
   output: {
     filename: 'index.js',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    clean: true
   },
 
   // Enable sourcemaps for debugging webpack's output.
@@ -11,20 +15,23 @@ module.exports = {
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js']
   },
 
   module: {
     rules: [
-      { test: /\.tsx?$/, use: [{ loader: 'awesome-typescript-loader' }] },
       {
-        enforce: 'pre',
-        test: /\.js$/,
-        use: [{ loader: 'source-map-loader' }],
-        exclude: /(node_modules)/
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: {
+          or: [
+              path.resolve(__dirname, 'node_modules'),
+              path.resolve(__dirname, 'src/**/*.spec.ts'),
+              path.resolve(__dirname, 'test')
+          ]
       }
+      },
     ]
- 
   },
   plugins: [
     new DtsBundleWebpack({
@@ -36,7 +43,6 @@ module.exports = {
     })
   ],
   optimization: {
-    // We no not want to minimize our code.
     minimize: true
   }
 };

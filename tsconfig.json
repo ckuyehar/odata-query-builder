@@ -10,7 +10,11 @@
     "noImplicitAny": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "target": "esnext",
     "typeRoots": ["node_modules/@types"]
-  }
+  },
+  "exclude": [
+    "dist"
+  ]
 }
