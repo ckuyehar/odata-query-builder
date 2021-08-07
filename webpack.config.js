@@ -1,4 +1,3 @@
-const path = require('path');
 const DtsBundleWebpack = require('dts-bundle-webpack')
 
 module.exports = {
@@ -14,22 +13,14 @@ module.exports = {
   devtool: 'source-map',
 
   resolve: {
-    // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.js']
   },
 
   module: {
     rules: [
       {
         test: /\.ts$/,
-        use: 'ts-loader',
-        exclude: {
-          or: [
-              path.resolve(__dirname, 'node_modules'),
-              path.resolve(__dirname, 'src/**/*.spec.ts'),
-              path.resolve(__dirname, 'test')
-          ]
-      }
+        use: 'ts-loader?configFile=tsconfig.webpack.json'
       },
     ]
   },
